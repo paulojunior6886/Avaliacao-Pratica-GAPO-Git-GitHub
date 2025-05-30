@@ -1,0 +1,85 @@
+-- Tabela de Usuários do Sistema
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nome_usuario VARCHAR(100) NOT NULL,
+    cpf_usuario VARCHAR(14) UNIQUE NOT NULL,
+    login_usuario VARCHAR(50) UNIQUE NOT NULL,
+    senha_usuario VARCHAR(255) NOT NULL, 
+    tipo_usuario VARCHAR(15) NOT NULL CHECK (tipo_usuario IN ('Administrador', 'Funcionário', 'Cliente'))
+);
+select * from usuarios;
+
+-- Tabela de Clientes da Concessionária
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome_cliente VARCHAR(100) NOT NULL,
+    cpf_cliente VARCHAR(14) UNIQUE NOT NULL,
+    endereco_cliente VARCHAR(255),
+    telefone_cliente VARCHAR(15),
+    email_cliente VARCHAR(100)
+);
+select * from clientes;
+
+-- Tabela de Veículos
+CREATE TABLE veiculos (
+    id SERIAL PRIMARY KEY,
+    modelo_veiculo VARCHAR(100) NOT NULL,
+    ano_fabricacao_veiculo INT NOT NULL,
+    ano_modelo_veiculo INT NOT NULL,
+    preco_veiculo DECIMAL(10,2) NOT NULL,
+    cor_veiculo VARCHAR(30),
+    placa_veiculo VARCHAR(10) UNIQUE NOT NULL,
+    tipo_veiculo VARCHAR(15) CHECK (tipo_veiculo IN ('Carro', 'Moto')),
+    marca_veiculo VARCHAR(50),
+    caminho_imagem TEXT -- Coluna para o caminho da imagem do veículo
+);
+select * from veiculos;
+
+-- Tabela de Vendas
+CREATE TABLE vendas (
+    id SERIAL PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    id_veiculo INT NOT NULL,
+    data_venda DATE NOT NULL,
+    valor_venda DECIMAL(10,2) NOT NULL,
+    status_venda VARCHAR(15) NOT NULL CHECK (status_venda IN ('Pendente', 'Finalizada', 'Cancelada')),
+    CONSTRAINT fk_cliente FOREIGN KEY (id_cliente) REFERENCES clientes(id) ON DELETE RESTRICT, 
+    CONSTRAINT fk_veiculo FOREIGN KEY (id_veiculo) REFERENCES veiculos(id) ON DELETE RESTRICT  
+);
+select * from vendas;
+
+-- Tabela de Opcionais dos Veículos
+CREATE TABLE opcionais (
+    id_opcional SERIAL PRIMARY KEY,
+    nome_opcional VARCHAR(100) UNIQUE NOT NULL,
+    descricao_opcional TEXT,
+    preco_adicional DECIMAL(10,2) DEFAULT 0
+);
+select * from opcionais;
+
+-- Tabela de Junção para Veículos e Opcionais (Relação N:N)
+CREATE TABLE veiculo_opcionais (
+    id_veiculo_fk INT NOT NULL,
+    id_opcional_fk INT NOT NULL,
+    CONSTRAINT fk_veiculo_opcional_veiculo FOREIGN KEY (id_veiculo_fk) REFERENCES veiculos(id) ON DELETE CASCADE,
+    CONSTRAINT fk_veiculo_opcional_opcional FOREIGN KEY (id_opcional_fk) REFERENCES opcionais(id_opcional) ON DELETE CASCADE,
+    PRIMARY KEY (id_veiculo_fk, id_opcional_fk)
+);
+select * from veiculo_opcionais;
+
+
+-- Tabela de Fornecedores (base para futura expansão, está presente no sistema mas sem conexão)
+CREATE TABLE fornecedores (
+    id SERIAL PRIMARY KEY,
+    nome_fornecedor VARCHAR(150) NOT NULL,
+    cnpj_fornecedor VARCHAR(18) UNIQUE NOT NULL,
+    endereco_fornecedor VARCHAR(255),
+    telefone_fornecedor VARCHAR(20),
+    email_fornecedor VARCHAR(100),
+    contato_principal VARCHAR(100)
+);
+select * from fornecedores;
+/* No projeto existe telas de fornecedores, funcionam, mas a ideia era implementar relação com veículo,
+com isso, deixei lá, porém é uma ideia de ampliação o uso de fornecedores.*/
+
+
