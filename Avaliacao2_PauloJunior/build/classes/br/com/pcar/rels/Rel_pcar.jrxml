@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3fbb6345-556b-4fb8-a3ac-738b2ecff5b9">
+	<property name="ireport.zoom" value="1.7715610000000037"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT 
+    v.id AS id_venda, 
+    v.data_venda, 
+    v.valor_venda, 
+    v.status_venda,
+    c.nome_cliente, 
+    c.cpf_cliente,
+    ve.marca_veiculo,
+    ve.modelo_veiculo, 
+    ve.placa_veiculo
+FROM 
+    vendas v 
+INNER JOIN 
+    clientes c ON v.id_cliente = c.id 
+INNER JOIN 
+    veiculos ve ON v.id_veiculo = ve.id 
+ORDER BY 
+    v.data_venda;]]>
+	</queryString>
+	<field name="id_venda" class="java.lang.Integer"/>
+	<field name="data_venda" class="java.sql.Date"/>
+	<field name="valor_venda" class="java.math.BigDecimal"/>
+	<field name="status_venda" class="java.lang.String"/>
+	<field name="nome_cliente" class="java.lang.String"/>
+	<field name="cpf_cliente" class="java.lang.String"/>
+	<field name="marca_veiculo" class="java.lang.String"/>
+	<field name="modelo_veiculo" class="java.lang.String"/>
+	<field name="placa_veiculo" class="java.lang.String"/>
+	<group name="nome_cliente">
+		<groupExpression><![CDATA[$F{nome_cliente}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<staticText>
+					<reportElement x="1" y="0" width="52" height="20" uuid="4c6d5c43-f0d5-4d55-b662-b37ccc61cdaa"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cliente:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="53" y="0" width="100" height="20" uuid="756abb64-7a52-4931-a12d-56485e9eb0eb"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_cliente}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1" y="20" width="30" height="20" uuid="b887b7d7-a460-4b85-88f6-81915056a922"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CPF:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="31" y="20" width="100" height="20" uuid="5d5b5db7-e10e-448f-8793-cf694bfce8e2"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cpf_cliente}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement x="87" y="0" width="383" height="28" uuid="14dbb3b2-7ba0-4a82-b810-8276e6ec034b"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Geral de Vendas por Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="214" y="45" width="130" height="20" uuid="03c73d7a-32a3-4887-b3ca-a8606547aa5c"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PCar Concessionária]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="453" y="101" width="100" height="20" uuid="0aefd767-174e-4eb6-835d-d7971f4e5fb7"/>
+				<textFieldExpression><![CDATA[$F{data_venda}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="394" y="101" width="59" height="20" uuid="26940eee-feb3-4c31-b2ad-08d10eec4cd1"/>
+				<text><![CDATA[Emitido em:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="54" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="50" width="555" height="1" uuid="c6d3081b-71ec-41b3-9c89-dc8e4393a5dd"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="87" height="20" uuid="a5a13f51-402d-403b-85dd-95f3b266997a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Venda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="87" y="0" width="75" height="20" uuid="04114a0b-7ae3-42b7-9bf0-62c13a50cd86"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="0" width="92" height="20" uuid="5949bbd2-68f7-449f-abb6-5c33fdb618ce"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Veiculo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="254" y="0" width="100" height="20" uuid="cb5e53de-d270-49c4-adf7-b3cc913f0465"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Placa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="354" y="0" width="100" height="20" uuid="7f99a11e-6c71-4099-88ea-5b847ec7b26b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="0" width="100" height="20" uuid="b1038386-a82c-4f60-ab45-c703a8a755d8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor (R$)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="49" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="87" height="20" uuid="6ee147ae-6fd1-4151-802c-6249f282a9c1"/>
+				<textFieldExpression><![CDATA[$F{id_venda}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="87" y="0" width="75" height="20" uuid="1d96563c-72e5-40fa-b461-c1f390b64b36"/>
+				<textFieldExpression><![CDATA[$F{data_venda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="0" width="92" height="20" uuid="4297af21-89ed-40b8-90ab-98b97bf53180"/>
+				<textFieldExpression><![CDATA[$F{marca_veiculo} + " " + $F{modelo_veiculo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="254" y="0" width="100" height="20" uuid="dad261aa-f2fd-427e-9970-e4c41dcbd829"/>
+				<textFieldExpression><![CDATA[$F{placa_veiculo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="354" y="0" width="99" height="20" uuid="43c8919b-0f11-47ae-8987-294cf5e89e7f"/>
+				<textFieldExpression><![CDATA[$F{status_venda}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="454" y="0" width="100" height="20" uuid="c4f2f6a8-8b1d-4586-8065-236150b634fe"/>
+				<textFieldExpression><![CDATA[$F{valor_venda}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="0" width="554" height="1" uuid="b558ce95-f88e-46d4-a955-fbaa36cf5b8a"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
